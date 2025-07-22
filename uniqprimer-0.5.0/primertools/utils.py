@@ -8,7 +8,7 @@ Created on Jan 1, 2011
 '''
 
 
-import exceptions
+#import exceptions
 import time
 import os.path
 from os import pathsep
@@ -63,7 +63,7 @@ def search_file( filename ):
     search_path = os.getenv( 'PATH' )
     logMessage( "utils::search_file", "Path: {0}".format( search_path ) )
     file_found = 0
-    paths = split( search_path, pathsep )
+    paths = search_path.split(pathsep) # rams changed to use str method directly
     for path in paths:
         if os.path.exists( os.path.join( path, filename ) ):
             file_found = 1
@@ -182,26 +182,26 @@ class EPrimerOptions( object ):
     def getProductRange( self ):
         return self.productRange
 
-class NoPrimersExistException( exceptions.BaseException ):
+class NoPrimersExistException(Exception ):
     
     def __init__( self ):
-        exceptions.BaseException( self )
+        Exception( self )
 
-class ProgramNotFoundException( exceptions.BaseException ):
+class ProgramNotFoundException(Exception ):
     
     def __init__( self, programName, details ):
-        exceptions.BaseException.__init__(self)
+        Exception.__init__(self)
         self.programName = programName
         self.details = details
         
-class NoFileFoundException( exceptions.BaseException ):
+class NoFileFoundException(Exception ):
     
     def __init__( self, filename ):
-        exceptions.BaseException.__init__(self)
+        Exception.__init__(self)
         self.filename = filename
         
         
-class ModuleNotInitializedException( exceptions.BaseException ):
+class ModuleNotInitializedException(Exception ):
     
     def __init__( self, moduleName, reason ):
         self.moduleName = moduleName
