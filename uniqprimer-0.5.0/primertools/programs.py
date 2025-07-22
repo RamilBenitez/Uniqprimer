@@ -23,7 +23,7 @@ class ProgramBase( object ):
     def getProcessArgs( self, args ):
         crash #abstract
         
-    def execute( self, args, async = False ):
+    def execute( self, args, run_async = False ): #change as asyn is a keyword
         '''
         run the nucmer program with a given compare file and an exclude file
         '''
@@ -38,7 +38,7 @@ class ProgramBase( object ):
         
         proc = subprocess.Popen( args )
         
-        if async == False:
+        if run_async == False:
             #wait for the nucmer instance to finish
             proc.wait( )
             print("*** Running {0} Complete ***".format( self.programName ))
