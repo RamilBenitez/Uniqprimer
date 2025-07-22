@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/env python3
 
 '''
 Created on Jan 1, 2011
@@ -9,12 +9,12 @@ Created on Jan 1, 2011
 @group: Computer Science Department, Asa Ben-Hur's laboratory 
 '''
 
-import exceptions
+#import exceptions
 import sys
 import time
 import os ## added by Alexis
 
-sys.path.append("/gs7k1/home/galaxy/galaxy_env/lib/python2.7/site-packages")
+#sys.path.append("/gs7k1/home/galaxy/galaxy_env/lib/python2.7/site-packages")
 
 import getopt
 from primertools import *
@@ -60,7 +60,7 @@ class UniqPrimerFinder( object ):
             
     
     def findPrimers( self, outputFile = "uPrimer.txt" ):
-	outputFile = uPrimer ## Mau adds to overwrite the above value
+	    outputFile = uPrimer ## Mau adds to overwrite the above value
 	
 
         utils.logMessage( "UniqPrimerFinder::findPrimers()", "Finding primers for include files" )
@@ -198,6 +198,8 @@ def parseArgs( args ):
     return includeFiles, excludeFiles, crossValidate, cleanup, verbose, eprimerOptions, lf , uPrimer, fastaDiff  #Mau: add lf, uPrime
 
 def main( args, debug = False):
+    global uPrimer, lf, fastaDiff #rams added to update global variable handling
+    
     #parse the command line arguments for include and exclude files
     
     includeFiles, excludeFiles, crossValidate, cleanup, verbose, eprimerOptions, lf, uPrimer, fastaDiff = parseArgs( args ) ##Mau add: lf
@@ -223,7 +225,7 @@ def main( args, debug = False):
         print(str( pnfe.details ))
     except utils.NoPrimersExistException as npe:
         print("Failure: No unique primers exist for this combination")
-    except exceptions.BaseException as e:
+    except Exception as e: #Rams changed to use built in exception
         print("It appears that an unknown sequence of events has resulted in the internal explosion of this program. Please send the file called \'log_uniqprimer.txt\' to herndon@cs.colostate.edu and tell that bonehead John to fix it!")
         print("Details:")
         print(e)    
