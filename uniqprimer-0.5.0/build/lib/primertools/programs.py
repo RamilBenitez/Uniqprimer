@@ -8,7 +8,7 @@ Created on Jan 1, 2011
 '''
 
 
-import utils
+from . import utils
 import os
 import subprocess
 
@@ -32,7 +32,7 @@ class ProgramBase( object ):
         
         args, outputFile = self.getProcessArgs( args )
         
-        print "*** Running {0} ***".format( self.programName )
+        print("*** Running {0} ***".format( self.programName ))
         
         utils.logList( "ProgramBase::Execute( )", args )
         
@@ -41,7 +41,7 @@ class ProgramBase( object ):
         if async == False:
             #wait for the nucmer instance to finish
             proc.wait( )
-            print "*** Running {0} Complete ***".format( self.programName )
+            print("*** Running {0} Complete ***".format( self.programName ))
         
         #return the name of the coords file
         return outputFile

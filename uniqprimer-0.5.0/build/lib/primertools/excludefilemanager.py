@@ -3,8 +3,8 @@ Created on Jan 16, 2011
 
 @author: jlh
 '''
-import utils
-import fastaparser
+from . import utils
+from . import fastaparser
 from Bio import SeqIO
 import os
 

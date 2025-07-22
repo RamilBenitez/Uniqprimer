@@ -8,11 +8,11 @@ Created on Jan 1, 2011
 '''
 
 
-import fastaparser
-import utils
+from . import fastaparser
+from . import utils
 import os
-import programs
-import nucmerparser
+from . import programs
+from . import nucmerparser
 import copy
 
 class IncludeFileManager( object ):
@@ -51,16 +51,16 @@ class IncludeFileManager( object ):
         sequences = fastaparser.parseFastaFileAsPrimerSequence( doWantFile )
         
         for match in matches:
-            if sequences.has_key( match.seqID ):
+            if match.seqID in sequences:
                 primerData = sequences[ match.seqID ]
                 primerData.addMatch( match )
             else:
-                print "Warning: id from .coords file not found in sequence data..."
+                print("Warning: id from .coords file not found in sequence data...")
                 utils.logMessage( "IncludeFileManager::processMatches( )", "WARNING - an ID was read in a Match that does not correspond to a sequence read from the fasta file!" )
         
         returnValue = [ ]
     
-        for key in sequences.keys( ):
+        for key in list(sequences.keys( )):
             sequence = sequences[ key ]
             subSequences = sequence.getNonMatchedSubSequences( )
             returnValue.extend( subSequences )
@@ -71,14 +71,14 @@ class IncludeFileManager( object ):
     def findCommonSequencesInFile(self, want, alsoWant ):
          utils.logMessage( "IncludeFileManager::findUniqueSequence( )", "running nucmer for reference file: {0}".format( want ) )
          
-         print want, alsoWant
+         print(want, alsoWant)
          coordFile = self.nucmer.execute( [ want, alsoWant ] )
          
          matches = nucmerparser.parseCoordMatchFile( coordFile )
          sequences = fastaparser.parseFastaFileAsPrimerSequence( want )
          
          for match in matches:
-             if sequences.has_key( match.seqID ):
+             if match.seqID in sequences:
                  primerData = sequences[ match.seqID ]
                  primerData.addMatch( match )
          

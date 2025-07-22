@@ -7,12 +7,12 @@ Created on Jan 1, 2011
 @group: Computer Science Department, Asa Ben-Hur's laboratory 
 '''
 
-import utils
+from . import utils
 import tempfile
-import programs
-import eprimerparser
-import primersearchutils
-import fastaparser
+from . import programs
+from . import eprimerparser
+from . import primersearchutils
+from . import fastaparser
 import exceptions
 
 
@@ -38,8 +38,8 @@ class PrimerManager( object ):
         #eleminate all sequences that are lees than the desired amplification size...
        
         if len( sequences ) == 4 :
-            print sequences
-        sequences = filter( lambda x: len( x ) >= 200, sequences )
+            print(sequences)
+        sequences = [x for x in sequences if len( x ) >= 200]
         
         primerFastaFile = utils.getTemporaryDirectory( ) + "/sequenceForEprimer.fasta"
         fastaparser.writeFastaFile( sequences, primerFastaFile )

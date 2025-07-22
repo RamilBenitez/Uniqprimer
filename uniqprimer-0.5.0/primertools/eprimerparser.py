@@ -8,7 +8,7 @@ Created on Jan 1, 2011
 '''
 
 import os
-import utils
+from . import utils
 import re
 
 def parsePrimerSequences( eprimerFile ):

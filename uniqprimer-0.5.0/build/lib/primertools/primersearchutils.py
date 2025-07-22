@@ -7,7 +7,7 @@ Created on Jan 1, 2011
 @group: Computer Science Department, Asa Ben-Hur's laboratory 
 '''
 
-import utils
+from . import utils
 
 def writePrimerSearchInputFile( primerSets, outputFile ):
     '''
@@ -21,7 +21,7 @@ def writePrimerSearchInputFile( primerSets, outputFile ):
     for primerSet in primerSets:
         i += 1
         if primerSet.reversePrimer == "":
-            print "Error - primer {0} has no reverse primer. {1} primers total".format( i, len( primerSets ) )
+            print("Error - primer {0} has no reverse primer. {1} primers total".format( i, len( primerSets ) ))
             continue
         file.write( primerSet.id + "\t" + primerSet.forwardPrimer + "\t" + primerSet.reversePrimer + "\n" )
         

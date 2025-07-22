@@ -15,6 +15,7 @@ from os import pathsep
 from string import split
 import tempfile
 import shutil
+from functools import reduce
 
 def getTimeStamp( ):
     return time.strftime('%d%m%Y-%H%M%S')
@@ -98,7 +99,7 @@ logFile = None
 def printProgressMessage( message ):
     global verbose
     if verbose == True:
-        print message
+        print(message)
 
 def getTemporaryDirectory( ):
     global tempDir
@@ -116,7 +117,7 @@ def shutdown( ):
     global tempDir
     shutdownLogging( )
     if removeTemp == True:
-        print "*** Removing temporary directory ***"
+        print("*** Removing temporary directory ***")
         shutil.rmtree( tempDir )
     
 def shutdownLogging( ):

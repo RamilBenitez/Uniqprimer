@@ -7,7 +7,7 @@ Created on Jan 1, 2011
 @group: Computer Science Department, Asa Ben-Hur's laboratory 
 '''
 
-import utils
+from . import utils
 
 class PrimerSequence( object ):
     """

@@ -8,12 +8,13 @@ Created on Jan 1, 2011
 '''
 
 
-import utils
-import primersequence
+from . import utils
+from . import primersequence
 
 from Bio import SeqIO
 from Bio import Seq
 from Bio import Alphabet
+from functools import reduce
 
 def parseFastaFileAsPrimerSequence( fileName ):
     
@@ -26,7 +27,7 @@ def parseFastaFileAsPrimerSequence( fileName ):
         seqdata = primersequence.PrimerSequence( sequence.id, len( sequence ), sequence.seq )
         returnValue[ sequence.id ] = seqdata
     
-    utils.logMessage("fastaparser::parseFastaFileAsPrimerSequence( )", "read {0} sequences".format( len( returnValue.keys( ) ) ) )
+    utils.logMessage("fastaparser::parseFastaFileAsPrimerSequence( )", "read {0} sequences".format( len( list(returnValue.keys( )) ) ) )
     
     return returnValue
     

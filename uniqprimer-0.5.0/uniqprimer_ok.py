@@ -97,31 +97,31 @@ class UniqPrimerFinder( object ):
         endTime = time.time()
         elapsedMinutes = int( ( endTime - startTime ) / 60 )
         elapsedSeconds = int( ( endTime - startTime ) % 60 )
-        print "*** Time Elapsed: {0} minutes, {1} seconds ***".format( elapsedMinutes, elapsedSeconds )
-        print "*** Output Written to {0} ***".format( outputFile )
+        print("*** Time Elapsed: {0} minutes, {1} seconds ***".format( elapsedMinutes, elapsedSeconds ))
+        print("*** Output Written to {0} ***".format( outputFile ))
         
 
 def printUsageAndQuit( ):
     global version  
-    print "uniqprimer - finds primers unique to a genome"
-    print "Version: " + str( version )
-    print "Summary of Options."
-    print "Required Arguments:"
-    print " -i <filename>: use <filename> as an include file. Primers will be identified for this genome"
-    print " -x <filename>: use <filename> as an exclude file. Primers for this genome will be excluded"
-    print " -o <filename>: specify the name of the unique primer output file (default is uPrimer.txt)" ## Mau added..
-    print " -l <filename>: specify the name of the log output file" ## Mau added..
+    print("uniqprimer - finds primers unique to a genome")
+    print("Version: " + str( version ))
+    print("Summary of Options.")
+    print("Required Arguments:")
+    print(" -i <filename>: use <filename> as an include file. Primers will be identified for this genome")
+    print(" -x <filename>: use <filename> as an exclude file. Primers for this genome will be excluded")
+    print(" -o <filename>: specify the name of the unique primer output file (default is uPrimer.txt)") ## Mau added..
+    print(" -l <filename>: specify the name of the log output file") ## Mau added..
 
-    print "\nOptional Arguments:"
-    print " --productsizerage: set a range for the desired size of PCR product (default=200-250). Example: ./uniqprimer -productsizerage 100-150"
-    print " --primersize: set the desired primer size (default=20)"
-    print " --minprimersize: set the minimum primer size (default=27)"
-    print " --maxprimersize: set the maximum primer size (default=18)"
-    print " --crossvalidate: force the program to cross validate primers against exclude files for extra certainty"
-    print " --keeptempfiles: force the program to keep temporary files"
+    print("\nOptional Arguments:")
+    print(" --productsizerage: set a range for the desired size of PCR product (default=200-250). Example: ./uniqprimer -productsizerage 100-150")
+    print(" --primersize: set the desired primer size (default=20)")
+    print(" --minprimersize: set the minimum primer size (default=27)")
+    print(" --maxprimersize: set the maximum primer size (default=18)")
+    print(" --crossvalidate: force the program to cross validate primers against exclude files for extra certainty")
+    print(" --keeptempfiles: force the program to keep temporary files")
     
-    print "\n\nExample:"
-    print "uniqprimer -i <includefile1> -i <includefile2> ... -i <includefileN> -x <excludefile1> -x <excludefile2> ... -x <excludefileN> -o primers.txt -l logfile.txt"
+    print("\n\nExample:")
+    print("uniqprimer -i <includefile1> -i <includefile2> ... -i <includefileN> -x <excludefile1> -x <excludefile2> ... -x <excludefileN> -o primers.txt -l logfile.txt")
     utils.shutdownLogging( )
     sys.exit( )
 
@@ -174,12 +174,12 @@ def parseArgs( args ):
         elif opt[ 0 ] == '-h':
             printUsageAndQuit( )
         else:
-            print "Unknown option: " + str( opt[ 0 ]  )
+            print("Unknown option: " + str( opt[ 0 ]  ))
             printUsageAndQuit( )
     #print "uPrimer: " + uPrimer + " log file name: " + lf + "\n"
     if len( includeFiles ) == 0 or len( excludeFiles ) == 0:
         
-        print "You must specify at least one include file and at least one exclude file"
+        print("You must specify at least one include file and at least one exclude file")
         printUsageAndQuit( )
 
     return includeFiles, excludeFiles, crossValidate, cleanup, verbose, eprimerOptions, lf , uPrimer  #Mau: add lf, uPrime
@@ -198,25 +198,25 @@ def main( args, debug = False):
         utils.logList( "uniqprimer::Main( )", includeFiles )
         utils.logMessage( "uniqprimer::Main( )", "Logging exclude files: " ) 
         utils.logList( "uniqprimer::Main( )", excludeFiles)
-        print "*** Finding Primers ***"
+        print("*** Finding Primers ***")
         uniqPrimer = UniqPrimerFinder( includeFiles, excludeFiles, crossValidate, eprimerOptions) 
         uniqPrimer.findPrimers( )
     except utils.NoFileFoundException as nfe:
-        print "File not found: " + str( nfe.filename )
+        print("File not found: " + str( nfe.filename ))
         printUsageAndQuit( )
     except utils.ProgramNotFoundException as pnfe:
-        print str( pnfe.programName ) + ": program is not installed or is not in your path."
-        print str( pnfe.details )
+        print(str( pnfe.programName ) + ": program is not installed or is not in your path.")
+        print(str( pnfe.details ))
     except utils.NoPrimersExistException as npe:
-        print "Failure: No unique primers exist for this combination"
+        print("Failure: No unique primers exist for this combination")
     except exceptions.BaseException as e:
-        print "It appears that an unknown sequence of events has resulted in the internal explosion of this program. Please send the file called \'log_uniqprimer.txt\' to herndon@cs.colostate.edu and tell that bonehead John to fix it!"
-        print "Details:"
-        print e    
+        print("It appears that an unknown sequence of events has resulted in the internal explosion of this program. Please send the file called \'log_uniqprimer.txt\' to herndon@cs.colostate.edu and tell that bonehead John to fix it!")
+        print("Details:")
+        print(e)    
     
     utils.shutdown( )
 
-    print "*** Finished ***"
+    print("*** Finished ***")
     
 if __name__ == '__main__':
     
