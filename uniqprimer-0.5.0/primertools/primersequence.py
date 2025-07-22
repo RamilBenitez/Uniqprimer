@@ -40,7 +40,7 @@ class PrimerSequence( object ):
         utils.logMessage( "PrimerSequence::findValidIndices( )", "there are {0} excluded sequences for {1}".format( len( self.matchedSubSequences ), self.seqID ) )
         for exclude in self.matchedSubSequences:
             excludedSequence = set( range( exclude[ 0 ], exclude[ 1 ] )  )
-            utils.logMessage("PrimerSequence::findValidIndices( )", "removing exclude sequence {0} - {1}".format( exclude[ 0 ], exclude[ 1 ] ) )
+            utils.logMessage("PrimerSequence::findValidIndices( )", f"removing exclude sequence {exclude[0]} - {exclude[1]}" ) 
             sequence = sequence - excludedSequence
 
         utils.logMessage("PrimerSequence::findValidIndices( )", "{0} unique indices".format( len( sequence ) ) )
