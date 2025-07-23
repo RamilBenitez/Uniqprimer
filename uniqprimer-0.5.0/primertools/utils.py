@@ -12,7 +12,7 @@ Created on Jan 1, 2011
 import time
 import os.path
 from os import pathsep
-from string import split
+#from string import split
 import tempfile
 import shutil
 from functools import reduce

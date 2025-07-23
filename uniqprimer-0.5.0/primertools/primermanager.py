@@ -13,7 +13,7 @@ from . import programs
 from . import eprimerparser
 from . import primersearchutils
 from . import fastaparser
-import exceptions
+#import exceptions
 
 
 

@@ -59,57 +59,53 @@ class UniqPrimerFinder( object ):
         utils.logMessage( "UniqPrimerFinder::writeOutputFile()", "output file written." )
             
     
-    def findPrimers( self, outputFile = "uPrimer.txt" ):
-	    outputFile = uPrimer ## Mau adds to overwrite the above value
-	
+    def findPrimers(self, outputFile="uPrimer.txt"):
+        outputFile = uPrimer  # Mau adds to overwrite the above value
 
-        utils.logMessage( "UniqPrimerFinder::findPrimers()", "Finding primers for include files" )
-        startTime = time.time( )
-        #generate the combined sequence fasta file for all exclude sequences
-        utils.printProgressMessage( "*** Creating Combined Fasta File for Exclude Files ***" )
+        utils.logMessage("UniqPrimerFinder::findPrimers()", "Finding primers for include files")
+        startTime = time.time()
+        # generate the combined sequence fasta file for all exclude sequences
+        utils.printProgressMessage("*** Creating Combined Fasta File for Exclude Files ***")
         for excludeFile in self.excludeFiles:
-            self.excludeFileManager.addExcludeFile( excludeFile )
+            self.excludeFileManager.addExcludeFile(excludeFile)
         
-        self.excludeFileManager.exportSequences( )
+        self.excludeFileManager.exportSequences()
         
-        self.includeFileManager.setExcludeFile( self.excludeFileManager.getOutputFileName( ) )
+        self.includeFileManager.setExcludeFile(self.excludeFileManager.getOutputFileName())
 
-        utils.printProgressMessage( "*** Finding Sequences Unique to Target Genome ***" )
+        utils.printProgressMessage("*** Finding Sequences Unique to Target Genome ***")
 
-        #run nucmer program on all include files
+        # run nucmer program on all include files
         for includeFile in self.includeFiles:
-            self.includeFileManager.processIncludeFile( includeFile )
+            self.includeFileManager.processIncludeFile(includeFile)
                 
-        #get the sequences found in include files, but no the exclude file. 
-        uniqueSequences = self.includeFileManager.getUniqueSequences( )
+        # get the sequences found in include files, but not the exclude file
+        uniqueSequences = self.includeFileManager.getUniqueSequences()
         
-        utils.printProgressMessage( "*** Finding Primers ***" )
+        utils.printProgressMessage("*** Finding Primers ***")
         
-        primers = self.primerManager.getPrimers( uniqueSequences )
-         
+        primers = self.primerManager.getPrimers(uniqueSequences)
+        
         if self.crossValidate == True:
-            utils.printProgressMessage( "*** Cross Validating Primers ***" )
-            primers = self.primerManager.crossValidatePrimers( primers, self.excludeFileManager.getOutputFileName( ) )
+            utils.printProgressMessage("*** Cross Validating Primers ***")
+            primers = self.primerManager.crossValidatePrimers(primers, self.excludeFileManager.getOutputFileName())
             # added by Alexis, primersearch also against all include files
-            #run primersearch program on all include files
-            j=0
-            for includeFile in self.includeFiles: # added by Alexis
+            # run primersearch program on all include files
+            j = 0
+            for includeFile in self.includeFiles:  # added by Alexis
                 j = j + 1
-                primers = self.primerManager.crossValidatePrimers2( primers, includeFile, j) # added by Alexis
-       		
- 
-        utils.logMessage( "UniqPrimerFinder::findPrimers( )", "found {0} unique sequences".format( len( primers ) ) ) 
+                primers = self.primerManager.crossValidatePrimers2(primers, includeFile, j)  # added by Alexis
         
-        self.writeOutputFile( primers, outputFile )
+        utils.logMessage("UniqPrimerFinder::findPrimers()", "found {0} unique sequences".format(len(primers))) 
         
-        utils.logMessage( "UniqPrimerFinder::findPrimers()", "Finished finding primers" )
+        self.writeOutputFile(primers, outputFile)
+        
+        utils.logMessage("UniqPrimerFinder::findPrimers()", "Finished finding primers")
         endTime = time.time()
-        elapsedMinutes = int( ( endTime - startTime ) / 60 )
-        elapsedSeconds = int( ( endTime - startTime ) % 60 )
-        print("*** Time Elapsed: {0} minutes, {1} seconds ***".format( elapsedMinutes, elapsedSeconds ))
-        print("*** Output Written to {0} ***".format( outputFile ))
-        
-
+        elapsedMinutes = int((endTime - startTime) / 60)
+        elapsedSeconds = int((endTime - startTime) % 60)
+        print("*** Time Elapsed: {0} minutes, {1} seconds ***".format(elapsedMinutes, elapsedSeconds))
+        print("*** Output Written to {0} ***".format(outputFile))
 def printUsageAndQuit( ):
     global version  
     print("uniqprimer - finds primers unique to a genome")
@@ -199,7 +195,7 @@ def parseArgs( args ):
 
 def main( args, debug = False):
     global uPrimer, lf, fastaDiff #rams added to update global variable handling
-    
+
     #parse the command line arguments for include and exclude files
     
     includeFiles, excludeFiles, crossValidate, cleanup, verbose, eprimerOptions, lf, uPrimer, fastaDiff = parseArgs( args ) ##Mau add: lf

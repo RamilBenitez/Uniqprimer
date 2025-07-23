@@ -13,7 +13,7 @@ from . import primersequence
 
 from Bio import SeqIO
 from Bio import Seq
-from Bio import Alphabet
+#from Bio import Alphabet
 from functools import reduce
 
 def parseFastaFileAsPrimerSequence( fileName ):
@@ -53,7 +53,7 @@ def writeFastaFile( sequences, fileName ):
     i = 0
     for sequence in sequences:
         seqStr = str( reduce( lambda x, y: str( x )+str( y ), sequence) )
-        seqRecord = SeqIO.SeqRecord( Seq.Seq( seqStr, Alphabet.IUPAC.extended_dna ),  id="seq_{0}".format( i ) )
+        seqRecord = SeqIO.SeqRecord( Seq.Seq( seqStr),  id="seq_{0}".format( i ) )
         seqRecords.append( seqRecord )
         i += 1
 
