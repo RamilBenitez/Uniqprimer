@@ -30,9 +30,9 @@ def parsePrimerSequences( eprimerFile ):
     nextPrimerId = 0
     for line in primerFile.readlines( ):
         
-        if line[ 0 ] == '# ':
+        if line.startswith( '# ' ):
             continue
-        
+
         if line.find( "PRODUCT SIZE" ) != -1:
             if currentPrimer is not None:
                 primers.append( currentPrimer )
@@ -41,7 +41,7 @@ def parsePrimerSequences( eprimerFile ):
             productSize = int( line.split( ':' )[ 1 ].strip( ) )
             currentPrimer.setProductSize( productSize )
         else:
-            tokens = re.split( ' *', line.strip( ) ) 
+            tokens = re.split( ' +', line.strip( ) )
             if len( tokens ) == 7:
                 
                 sequence = tokens[ 6 ]
