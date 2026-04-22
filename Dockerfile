@@ -6,10 +6,14 @@ ENV DEBIAN_FRONTEND=noninteractive
 # Set workdir
 WORKDIR /app
 
-# Install dependencies
+# Install build tools
 RUN apt-get update && apt-get install -y \
-    wget build-essential emboss \
-    libexpat1 libgomp1 perl git \
+    wget build-essential libexpat1 libgomp1 perl git \
+    && rm -rf /var/lib/apt/lists/*
+
+# Install EMBOSS (separate layer to keep sizes manageable)
+RUN apt-get update && apt-get install -y \
+    emboss \
     && rm -rf /var/lib/apt/lists/*
 
 # Install MUMmer 3.23
@@ -27,14 +31,14 @@ RUN wget https://downloads.sourceforge.net/project/mummer/mummer/3.23/MUMmer3.23
 ENV PERL5LIB=/app/MUMmer3.23/scripts
 
 
-# Install Primer3 v1.1.4
+# Install Primer3 v1.1.4 (required by EMBOSS eprimer3)
 RUN wget https://github.com/primer3-org/primer3/archive/refs/tags/v1.1.4.tar.gz -O primer3-1.1.4.tar.gz && \
     tar -xzf primer3-1.1.4.tar.gz && \
     cd primer3-1.1.4/src && \
-    make && \
+    make CFLAGS="-std=gnu89 -O2" && \
     cp primer3_core /usr/local/bin/ && \
     cd ../.. && rm -rf primer3-1.1.4*
-
+    
 # Copy all project files
 COPY . /app/
 
