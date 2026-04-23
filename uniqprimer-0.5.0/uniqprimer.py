@@ -46,11 +46,12 @@ class UniqPrimerFinder( object ):
         '''
         ##outputFileName = uPrimer ##Mau: defined this..
         outputFile = open( outputFileName, 'w' )
-        
+        outputFile.write( "ID\tForward\tReverse\tProduct_Size\n" )
+
         i = 0
         for primer in primers:
             i += 1
-            
+
             outputFile.write( "{0}\t{1}\t{2}\t{3}\n".format( i, primer.forwardPrimer, primer.reversePrimer, primer.productSize ) )
             
             if i > maxresults:
