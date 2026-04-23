@@ -88,7 +88,7 @@ def initialize( isVerbose, cleanup, lf): ##Mau: added lf
     logFile = lf #:Mau add line
     
     verbose = isVerbose
-    tempDir = tempfile.mkdtemp( dir="" )
+    tempDir = tempfile.mkdtemp( dir="/tmp" )
     initializeLogging()
     removeTemp = cleanup
     logMessage( "utils::Initialize( )", "Initialization complete. Temporary directory: {0}".format( tempDir ) )

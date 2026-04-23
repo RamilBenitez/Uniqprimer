@@ -52,7 +52,7 @@ def writeFastaFile( sequences, fileName ):
     seqRecords = [ ]
     i = 0
     for sequence in sequences:
-        seqStr = str( reduce( lambda x, y: str( x )+str( y ), sequence) )
+        seqStr = sequence if isinstance(sequence, str) else "".join(str(c) for c in sequence)
         seqRecord = SeqIO.SeqRecord( Seq.Seq( seqStr),  id="seq_{0}".format( i ) )
         seqRecords.append( seqRecord )
         i += 1
