@@ -31,26 +31,23 @@ class PrimerSequence( object ):
         self.matchedSubSequences.append( ( match.start, match.end ) )
     
     def findNonMatchedIndices( self ):
-        
+        # Kept for API compatibility; returns sorted indices efficiently using intervals
         utils.logMessage("PrimerSequence::findValidIndices( )", "getting unmatched sequence indices" )
-
-        sequence = set( range( self.seqLength ) )
-        
-        #find the indices that are NOT excluded
         utils.logMessage( "PrimerSequence::findValidIndices( )", "there are {0} excluded sequences for {1}".format( len( self.matchedSubSequences ), self.seqID ) )
-        for exclude in self.matchedSubSequences:
-            excludedSequence = set( range( exclude[ 0 ], exclude[ 1 ] )  )
-            utils.logMessage("PrimerSequence::findValidIndices( )", f"removing exclude sequence {exclude[0]} - {exclude[1]}" ) 
-            sequence = sequence - excludedSequence
+        excluded = sorted(self.matchedSubSequences)
+        indices = []
+        prev_end = 0
+        for start, end in excluded:
+            utils.logMessage("PrimerSequence::findValidIndices( )", f"removing exclude sequence {start} - {end}")
+            if start > prev_end:
+                indices.extend(range(prev_end, start))
+            prev_end = max(prev_end, end)
+        indices.extend(range(prev_end, self.seqLength))
+        utils.logMessage("PrimerSequence::findValidIndices( )", "{0} unique indices".format( len( indices ) ) )
+        return indices
 
-        utils.logMessage("PrimerSequence::findValidIndices( )", "{0} unique indices".format( len( sequence ) ) )
-            
-        return list( sequence )
-    
     def findNonMatchedIndexSequences( self, indices ):
-        
         utils.logMessage("PrimerSequence::findValidIndexSequences( )", "getting sequences from unique indices" )
-        
         sequences = [ ]
         curSeq = [ ]
         for index in indices:
@@ -61,30 +58,44 @@ class PrimerSequence( object ):
             else:
                 sequences.append( curSeq )
                 curSeq = [ ]
-        sequences.append( curSeq )        
-        utils.logMessage("PrimerSequence::findValidIndexSequences( )", "{0} sequences found".format( len( sequences ) ) )        
-        
+        sequences.append( curSeq )
+        utils.logMessage("PrimerSequence::findValidIndexSequences( )", "{0} sequences found".format( len( sequences ) ) )
         return sequences
-    
-    
+
+
     def getNonMatchedSubSequences( self, minLength = 100 ):
         """
-        Get all valid sub sequences after removing matches
-        """        
-
+        Get all valid sub sequences after removing matches using interval arithmetic.
+        Avoids building large index sets for performance.
+        """
         utils.logMessage("PrimerSequence::getNonMatchedSubSequences( )", "finding valid sub sequences for {0}".format( self.seqID ) )
+        utils.logMessage( "PrimerSequence::findValidIndices( )", "getting unmatched sequence indices" )
+        utils.logMessage( "PrimerSequence::findValidIndices( )", "there are {0} excluded sequences for {1}".format( len( self.matchedSubSequences ), self.seqID ) )
 
-        indices = self.findNonMatchedIndices( ) 
-        indexSequences = self.findNonMatchedIndexSequences( indices )
-        
-        subSequences = [ ]
-        
-        for indexSequence in indexSequences:
-            subSequence = [ self.sequence[ i ] for i in indexSequence ]
-            
-            if len( subSequence ) >= minLength:
-                subSequences.append( subSequence )
-        
+        excluded = sorted(self.matchedSubSequences)
+        seqStr = str(self.sequence)
+        subSequences = []
+        prev_end = 0
+        total_unique = 0
+
+        for start, end in excluded:
+            utils.logMessage("PrimerSequence::findValidIndices( )", f"removing exclude sequence {start} - {end}")
+            if start > prev_end:
+                length = start - prev_end
+                total_unique += length
+                if length >= minLength:
+                    subSequences.append(seqStr[prev_end:start])
+            prev_end = max(prev_end, end)
+
+        if self.seqLength > prev_end:
+            length = self.seqLength - prev_end
+            total_unique += length
+            if length >= minLength:
+                subSequences.append(seqStr[prev_end:self.seqLength])
+
+        utils.logMessage("PrimerSequence::findValidIndices( )", "{0} unique indices".format(total_unique))
+        utils.logMessage("PrimerSequence::findValidIndexSequences( )", "getting sequences from unique indices")
+        utils.logMessage("PrimerSequence::findValidIndexSequences( )", "{0} sequences found".format(len(subSequences)))
         return subSequences
     
     def getMatchedSubSequences( self, minLength = 100 ):
