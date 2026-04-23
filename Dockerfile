@@ -56,5 +56,6 @@ ENV PATH="/app/uniqprimer-0.5.0:$PATH"
 ENV PYTHONPATH="/app/uniqprimer-0.5.0:$PYTHONPATH"
 ENV TMPDIR=/tmp/uniqprimer
 
-# Entrypoint (runs the main shell script)
-ENTRYPOINT ["/app/uniqprimer.sh"]
+# No ENTRYPOINT - Galaxy wraps the tool command in its own shell script and needs
+# a bare /bin/sh entry point. CMD is still usable for standalone docker run calls.
+CMD ["/app/uniqprimer.sh"]
