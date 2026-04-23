@@ -69,7 +69,7 @@ class Nucmer( ProgramBase ):
         
         time = utils.getTimeStamp( )
         
-        identifier =  "nucmer_alignments"
+        identifier = os.path.join(utils.getTemporaryDirectory(), "nucmer_alignments")
         args = [ self.nucmer, '-p', identifier, '-o', '--minmatch', '300', '--maxgap', '1' ]
         
         args.extend( inputArgs )
