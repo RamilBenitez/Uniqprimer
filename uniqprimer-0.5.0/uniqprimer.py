@@ -14,6 +14,7 @@ import time
 import os
 import zipfile
 import datetime
+import shutil
 
 import getopt
 from primertools import *
@@ -148,11 +149,17 @@ class UniqPrimerFinder( object ):
 
         utils.logMessage("UniqPrimerFinder::writeHTMLReport()", "HTML report written.")
 
-    def createZipArchive( self, zipFileName, *files ):
+    def createZipArchive( self, zipFileName, primerFile, logFile, fastaFile, htmlFile ):
+        entries = [
+            (primerFile,  "primers.tsv"),
+            (fastaFile,   "sequences_for_primer3.fasta"),
+            (logFile,     "run_log.txt"),
+            (htmlFile,    "qc_report.html"),
+        ]
         with zipfile.ZipFile(zipFileName, 'w', zipfile.ZIP_DEFLATED) as zf:
-            for f in files:
-                if f and os.path.exists(f):
-                    zf.write(f, os.path.basename(f))
+            for src, arcname in entries:
+                if src and os.path.exists(src):
+                    zf.write(src, arcname)
         utils.logMessage("UniqPrimerFinder::createZipArchive()", "ZIP archive written.")
 
     def findPrimers(self, outputFile="uPrimer.txt"):
@@ -193,6 +200,12 @@ class UniqPrimerFinder( object ):
         elapsed = endTime - startTime
 
         self.writeOutputFile(primers, outputFile)
+
+        # Copy fasta to its Galaxy output path now so it is available for the ZIP
+        tmpdir_path = utils.getTemporaryDirectory()
+        fasta_source = os.path.join(tmpdir_path, "sequenceForEprimer.fasta")
+        if fastaDiff and os.path.exists(fasta_source):
+            shutil.copy2(fasta_source, fastaDiff)
 
         if htmlReport:
             utils.printProgressMessage("*** Generating HTML QC Report ***")
