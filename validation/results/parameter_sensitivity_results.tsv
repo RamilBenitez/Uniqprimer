@@ -1,0 +1,7 @@
+Test_ID	Parameter	Value	Primers_Count	Runtime_Seconds	Notes
+PSR_100_300	Product_Size_Range	100-300 (Narrow)	101	139	Fixed: osize=20 min=10 max=35
+PSR_100_600	Product_Size_Range	100-600 (Default)	101	135	Fixed: osize=20 min=10 max=35
+PSR_100_1000	Product_Size_Range	100-1000 (Wide)	101	133	Fixed: osize=20 min=10 max=35
+OSIZE_18	Optimal_Primer_Size	18bp (Short (lower Tm))	101	124	Min=16 Max=26 prange=100-600
+OSIZE_20	Optimal_Primer_Size	20bp (Standard (default Tm))	101	128	Min=18 Max=28 prange=100-600
+OSIZE_22	Optimal_Primer_Size	22bp (Long (higher Tm))	101	127	Min=20 Max=30 prange=100-600

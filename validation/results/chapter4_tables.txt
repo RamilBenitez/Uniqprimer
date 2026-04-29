@@ -1,0 +1,45 @@
+Chapter 4 Validation Tables
+Generated: 2026-04-29 17:22
+======================================================================
+
+TABLE 4.1: Multi-Dataset Functional Validation Results
+----------------------------------------------------------------------
+Run             Include Genome        Exclude Genome          Primer Pairs  Runtime     
+----------------------------------------------------------------------
+Run 1 (Local)   X11-5Agenome.fasta    Xoo_KACC_10331.fasta    101           7m 41s      
+Run 2 (Docker)  Xoc_BLS256.fasta      X11-5Agenome.fasta      101           2m 43s      
+Run 3 (Docker)  X11-5Agenome.fasta    Xcampestris.fasta       4             0m 41s      
+
+Note: All runs used default parameters (PSR=100-600, osize=20, min=10, max=35)
+      unless otherwise stated. All runs verified to produce 3 output files
+      (primers.txt, output.fasta, log.txt).
+
+TABLE 4.2: Reproducibility Test Results (Same Dataset, 3 Repeats)
+----------------------------------------------------------------------
+Dataset: X11-5Agenome.fasta (include) vs Xoo_KACC_10331.fasta (exclude)
+Environment: Docker (volture2721/uniqprimer:0.5.0)
+
+Repeat    Primer Pairs  Runtime     MD5 (primers.txt)                   
+----------------------------------------------------------------------
+Run 1     101           2m 33s      c5837288fbcd91b583d92d0a8315260a    
+Run 2     101           2m 30s      c5837288fbcd91b583d92d0a8315260a    
+Run 3     101           2m 24s      c5837288fbcd91b583d92d0a8315260a    
+
+Reproducibility Result: PASS (Deterministic)
+
+TABLE 4.3: Parameter Sensitivity Analysis Results
+----------------------------------------------------------------------
+Fixed Dataset: X11-5Agenome.fasta (include) vs Xoo_KACC_10331.fasta (exclude)
+
+Parameter               Value                         Primer Pairs  Runtime     
+----------------------------------------------------------------------
+Product Size Range      100-300 (Narrow)              101           2m 18s      
+Product Size Range      100-600 (Default)             101           2m 13s      
+Product Size Range      100-1000 (Wide)               101           2m 12s      
+Optimal Primer Length   18 bp (Shorter, lower Tm)     101           2m 3s       
+Optimal Primer Length   20 bp (Default)               101           2m 7s       
+Optimal Primer Length   22 bp (Longer, higher Tm)     101           2m 5s       
+
+Note: Tm values are estimates based on Wallace Rule (Tm ≈ 2(A+T) + 4(G+C))
+      Actual Tm depends on primer sequence composition.
+

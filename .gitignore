@@ -20,3 +20,10 @@ outputs/primers.txt
 
 # Version file (auto-generated)
 version
+
+# Validation run output.fasta files (large intermediate files, reproducible from inputs)
+validation/reproducibility/*/output.fasta
+validation/parameter_sensitivity/*/output.fasta
+
+# Screenshots folder (added manually per machine)
+validation/results/screenshots/
