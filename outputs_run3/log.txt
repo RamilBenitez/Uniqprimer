@@ -1,0 +1,75 @@
+utils::Initialize( ) - Initialization complete. Temporary directory: /tmp/tmpj2bjwq20
+uniqprimer::Main( ) - Logging include files: 
+uniqprimer::Main( ) - /app/uniqprimer-0.5.0/data/X11-5Agenome.fasta
+uniqprimer::Main( ) - Logging exclude files: 
+uniqprimer::Main( ) - /app/uniqprimer-0.5.0/data/Xcampestris.fasta
+UniqPrimerFinder::__init__() - Initializing UniqPrimerFinder
+utils::search_file - Path: /app/uniqprimer-0.5.0:/usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+utils::search_file - Path: /app/uniqprimer-0.5.0:/usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+utils::search_file - Path: /app/uniqprimer-0.5.0:/usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+utils::search_file - Path: /app/uniqprimer-0.5.0:/usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+UniqPrimerFinder::__init__() - Initializing UniqPrimerFinder - complete
+UniqPrimerFinder::findPrimers() - Finding primers for include files
+ExcludeFileManager::addExcludeFile( ) - adding exclude file /app/uniqprimer-0.5.0/data/Xcampestris.fasta
+ExcludeFileManager::exportSequences( ) - parsing exclude sequences
+fastaparser::parseFastaFile( ) - parsing fasta file /app/uniqprimer-0.5.0/data/Xcampestris.fasta
+ExcludeFileManager::exportSequences( ) - finished parsing, writing to a common file
+ExcludeFileManager::buildOutputFileName( ) -  exclude file: /tmp/tmpj2bjwq20/combined_exlude.ffn
+ExcludeFileManager::exportSequences( ) - All sequences exported
+IncludeFileManager::setExcludeFile( ) - fileName /tmp/tmpj2bjwq20/combined_exlude.ffn
+IncludeFileManager::processIncludeFile( ) - processing /app/uniqprimer-0.5.0/data/X11-5Agenome.fasta
+IncludeFileManager::processIncludeFile( ) - running nucmer for reference file: /app/uniqprimer-0.5.0/data/X11-5Agenome.fasta
+IncludeFileManager::findUniqueSequence( ) - running nucmer for reference file: /app/uniqprimer-0.5.0/data/X11-5Agenome.fasta
+ProgramBase::Execute( ) - Running the nucmer program.
+ProgramBase::Execute( ) - /usr/local/bin/nucmer -p /tmp/tmpj2bjwq20/nucmer_alignments -o --minmatch 300 --maxgap 1 /app/uniqprimer-0.5.0/data/X11-5Agenome.fasta /tmp/tmpj2bjwq20/combined_exlude.ffn
+NucmerParser::parseCoordMatchFile( ) - Parse /tmp/tmpj2bjwq20/nucmer_alignments.coords, finding 2 matches
+fastaparser::parseFastaFileAsPrimerSequence( ) - parsing fasta file /app/uniqprimer-0.5.0/data/X11-5Agenome.fasta
+fastaparser::parseFastaFileAsPrimerSequence( ) - read 1 sequences
+PrimerSequence::getNonMatchedSubSequences( ) - finding valid sub sequences for X11-5A
+PrimerSequence::findValidIndices( ) - getting unmatched sequence indices
+PrimerSequence::findValidIndices( ) - there are 2 excluded sequences for X11-5A
+PrimerSequence::findValidIndices( ) - removing exclude sequence 1958030 - 1963613
+PrimerSequence::findValidIndices( ) - removing exclude sequence 1958145 - 1963613
+PrimerSequence::findValidIndices( ) - 4341162 unique indices
+PrimerSequence::findValidIndexSequences( ) - getting sequences from unique indices
+PrimerSequence::findValidIndexSequences( ) - 2 sequences found
+PrimerManager::getCommonPrimers - finding primers that are common to all include files
+PrimerManager::findPrimer(s ) - writing sequences to a fasta file
+PrimerManager::writeFastaFile( ) - Writing 2 sequences to fasta file
+PrimerManager::writeFastaFile( ) - writing fasta file complete
+PrimerManager::findPrimers( ) - executing eprimer3 program
+ProgramBase::Execute( ) - Running the EPrimer3 program.
+ProgramBase::Execute( ) - /usr/bin/eprimer3 /tmp/tmpj2bjwq20/sequenceForEprimer.fasta /tmp/tmpj2bjwq20/referenceprimers.ep3 -numreturn 2 -prange 100-300 -osize 20 -minsize 18 -maxsize 27
+PrimerManager::findPrimer( ) - eprimer3 file /tmp/tmpj2bjwq20/referenceprimers.ep3 created. Parsing for primers.
+eprimerparser::parsePrimerSequences( ) - parsing for primer sequences
+eprimerparser::parsePrimerSequences( ) - finished parsing. found 4 primers
+PrimerManager::findPrimers( ) - parsing for sequences complete
+fastaparser::parseFastaFile( ) - parsing fasta file /tmp/tmpj2bjwq20/combined_exlude.ffn
+PrimerManager::crossValidatePrimers - finding primers that are not in the supplied exclude file
+ProgramBase::Execute( ) - Running the PrimerSearch program.
+ProgramBase::Execute( ) - /usr/bin/primersearch -seqall /tmp/tmpj2bjwq20/combined_exlude.ffn -infile /tmp/tmpj2bjwq20/tmpinputprimers.ps -mismatchpercent 10 -outfile /tmp/tmpj2bjwq20/tmpoutputprimers.ps
+PrimerManager::crossValidatePrimers - 3 unique primers identified out of 4
+fastaparser::parseFastaFile( ) - parsing fasta file /app/uniqprimer-0.5.0/data/X11-5Agenome.fasta
+PrimerManager::crossValidatePrimers - finding primers that are in the supplied include file
+ProgramBase::Execute( ) - Running the PrimerSearch program.
+ProgramBase::Execute( ) - /usr/bin/primersearch -seqall /app/uniqprimer-0.5.0/data/X11-5Agenome.fasta -infile /tmp/tmpj2bjwq20/tmpinputprimers2.ps1 -mismatchpercent 0 -outfile /tmp/tmpj2bjwq20/tmpoutputprimers2.ps1
+PrimerManager::crossValidatePrimers - 3 unique primers identified out of 3
+UniqPrimerFinder::findPrimers() - found 3 unique sequences
+UniqPrimerFinder::writeOutputFile() - output file written.
+UniqPrimerFinder::findPrimers() - Finished finding primers
+*** Finding Primers ***
+*** Creating Combined Fasta File for Exclude Files ***
+*** Finding Sequences Unique to Target Genome ***
+*** Running nucmer ***
+*** Running nucmer Complete ***
+*** Finding Primers ***
+*** Running EPrimer3 ***
+*** Running EPrimer3 Complete ***
+*** Cross Validating Primers ***
+*** Running PrimerSearch ***
+*** Running PrimerSearch Complete ***
+*** Running PrimerSearch ***
+*** Running PrimerSearch Complete ***
+*** Time Elapsed: 0 minutes, 41 seconds ***
+*** Output Written to /outputs/primers.txt ***
+*** Finished ***
