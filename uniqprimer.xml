@@ -10,6 +10,9 @@
 		#for $i in $inputs
 			-i ${i.input}
 		#end for
+		#for $e in $excludes
+			-x ${e.excl}
+		#end for
 	]]></command>
 	<inputs>
 		<param format="fasta" name="include" type="data" label="FASTA file to include" help="Sequences for which you want design specific primer"/>
@@ -17,6 +20,9 @@
 			<param name="input" label="Add FASTA file to include" type="data" format="fasta" />
 		</repeat>
 		<param format="fasta" name="exclude" type="data" label="FASTA file to exclude" help="Primers will not match these sequences"/>
+		<repeat name="excludes" title="Exclude FASTA file">
+			<param name="excl" label="Add FASTA file to exclude" type="data" format="fasta" help="Add additional non-target genomes to exclude"/>
+		</repeat>
                 <param type="text" name="product_size_range" label="Product size range" value="100-300"/>
                 <param type="text" name="primer_size" label="Optimal primer size" value="20"/>
                 <param type="text" name="min_size" label="Min primer size" value="18"/>
