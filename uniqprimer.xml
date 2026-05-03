@@ -5,7 +5,7 @@
 		<requirement type="package" version="3.23">mummer</requirement>
 		<requirement type="package" version="1.1.4">primer3</requirement>
 	</requirements>
-	<command>$__tool_directory__/uniqprimer.sh $include $exclude $product_size_range $primer_size $min_size $max_size $crossvalidate $outfile $log $fasta
+	<command>$__tool_directory__/uniqprimer.sh $include $exclude $product_size_range $primer_size $min_size $max_size $crossvalidate $outfile $log $fasta $htmlreport $ziparchive
 #for $i in $inputs
         -i ${i.input}
 #end for
@@ -30,6 +30,8 @@
 		<data format="txt" name="outfile" label="Primer list"/>
 		<data format="fasta" name="fasta" label="Fasta for Primer3"/>
 		<data format="txt" name="log" label="Logfile"/>
+		<data format="html" name="htmlreport" label="QC Report (HTML)"/>
+		<data format="zip" name="ziparchive" label="ZIP Archive"/>
 	</outputs>
 	<help>
 	

@@ -9,6 +9,8 @@ crossvalidate=$7
 outfile=$8
 log=$9
 fasta=${10}
+htmlreport=${11}
+ziparchive=${12}
 
 directory=`dirname $0`
 other_inputs_line=""
@@ -16,7 +18,7 @@ other_inputs_line=""
 j=1
 for i in $*
 do
-	if [[ $j -ge 11 ]]
+	if [[ $j -ge 13 ]]
 	then other_inputs_line=${other_inputs_line}" "$i
 	fi
 	j=$((j+1))
@@ -24,9 +26,9 @@ done
 
 
 if [[ $crossvalidate == "Yes" ]] 
-then python3 $directory/uniqprimer-0.5.0/uniqprimer.py -i $include -x $exclude --productsizerange $product_size_range --primersize $primer_size --minprimersize $min_size --crossvalidate --keeptempfiles --maxprimersize $max_size -o $outfile -f $fasta -l $log $other_inputs_line >>$log 2>&1
+then python3 $directory/uniqprimer-0.5.0/uniqprimer.py -i $include -x $exclude --productsizerange $product_size_range --primersize $primer_size --minprimersize $min_size --crossvalidate --keeptempfiles --maxprimersize $max_size -o $outfile -f $fasta -r $htmlreport -z $ziparchive -l $log $other_inputs_line >>$log 2>&1
 elif [[ $crossvalidate = "No" ]]
-then python3 $directory/uniqprimer-0.5.0/uniqprimer.py -i $include -x $exclude --productsizerange $product_size_range --primersize $primer_size --minprimersize $min_size --keeptempfiles --maxprimersize $max_size -o $outfile -f $fasta -l $log $other_inputs_line >>$log 2>&1
+then python3 $directory/uniqprimer-0.5.0/uniqprimer.py -i $include -x $exclude --productsizerange $product_size_range --primersize $primer_size --minprimersize $min_size --keeptempfiles --maxprimersize $max_size -o $outfile -f $fasta -r $htmlreport -z $ziparchive -l $log $other_inputs_line >>$log 2>&1
 fi
 
 
