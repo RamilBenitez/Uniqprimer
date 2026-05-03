@@ -238,8 +238,8 @@ def printUsageAndQuit( ):
     print("\nOptional Arguments:")
     print(" --productsizerange: set a range for the desired size of PCR product (default=200-250)")
     print(" --primersize: set the desired primer size (default=20)")
-    print(" --minprimersize: set the minimum primer size (default=27)")
-    print(" --maxprimersize: set the maximum primer size (default=18)")
+    print(" --minprimersize: set the minimum primer size (default=18)")
+    print(" --maxprimersize: set the maximum primer size (default=27)")
     print(" --crossvalidate: cross validate primers against exclude files")
     print(" --keeptempfiles: keep temporary files")
     print("\nExample:")
@@ -334,7 +334,6 @@ def main( args, debug=False ):
         print("Details:")
         print(e)
 
-    os.system("cp -rf " + tmpdir + "/sequenceForEprimer.fasta" + " " + fastaDiff)
     utils.shutdown()
 
     print("*** Finished ***")
