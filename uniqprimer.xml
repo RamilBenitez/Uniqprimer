@@ -5,12 +5,12 @@
 		<requirement type="package" version="3.23">mummer</requirement>
 		<requirement type="package" version="1.1.4">primer3</requirement>
 	</requirements>
-	<command>$__tool_directory__/uniqprimer.sh $include $exclude $product_size_range $primer_size $min_size $max_size $crossvalidate $outfile $log $fasta $htmlreport $ziparchive
-#for $i in $inputs
-        -i ${i.input}
-#end for
-
-</command>
+	<command><![CDATA[
+		$__tool_directory__/uniqprimer.sh $include $exclude $product_size_range $primer_size $min_size $max_size $crossvalidate $outfile $log $fasta $htmlreport $ziparchive
+		#for $i in $inputs
+			-i ${i.input}
+		#end for
+	]]></command>
 	<inputs>
 		<param format="fasta" name="include" type="data" label="FASTA file to include" help="Sequences for which you want design specific primer"/>
 		<repeat name="inputs" title="Include FASTA file">
@@ -50,7 +50,7 @@
  Please cite:
 ==============
 
-"".
+Karim et al. (2019). Development of the automated primer design workflow UniqPrimer and diagnostic primers for the broad-host-range plant pathogen *Dickeya dianthicola*. Plant Disease, 103(10), 2893-2903. doi:10.1094/PDIS-10-18-1819-RE
 
 -----
 
