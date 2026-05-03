@@ -24,9 +24,9 @@ done
 
 
 if [[ $crossvalidate == "Yes" ]] 
-then python $directory/uniqprimer-0.5.0/uniqprimer.py -i $include -x $exclude --productsizerange $product_size_range --primersize $primer_size --minprimersize $min_size --crossvalidate --keeptempfiles --maxprimersize $max_size -o $outfile -f $fasta -l $log $other_inputs_line >>$log 2>&1
+then python3 $directory/uniqprimer-0.5.0/uniqprimer.py -i $include -x $exclude --productsizerange $product_size_range --primersize $primer_size --minprimersize $min_size --crossvalidate --keeptempfiles --maxprimersize $max_size -o $outfile -f $fasta -l $log $other_inputs_line >>$log 2>&1
 elif [[ $crossvalidate = "No" ]]
-then python $directory/uniqprimer-0.5.0/uniqprimer.py -i $include -x $exclude --productsizerange $product_size_range --primersize $primer_size --minprimersize $min_size --keeptempfiles --maxprimersize $max_size -o $outfile -f $fasta -l $log $other_inputs_line >>$log 2>&1
+then python3 $directory/uniqprimer-0.5.0/uniqprimer.py -i $include -x $exclude --productsizerange $product_size_range --primersize $primer_size --minprimersize $min_size --keeptempfiles --maxprimersize $max_size -o $outfile -f $fasta -l $log $other_inputs_line >>$log 2>&1
 fi
 
 
